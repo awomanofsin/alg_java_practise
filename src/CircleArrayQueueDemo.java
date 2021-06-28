@@ -14,8 +14,8 @@ class CircleArray {
     public CircleArray(int arrMaxSize){
         maxSize = arrMaxSize;
         arr = new int[maxSize];
-        front = -1;
-        rear = -1;
+        front = 0;
+        rear = 0;
     }
 
     //判断队列是否满
@@ -43,6 +43,7 @@ class CircleArray {
             throw new RuntimeException("队列空，不能取数据");
         }
         front++;
+        front = front%maxSize;
         return arr[front];
     }
 
@@ -51,15 +52,20 @@ class CircleArray {
             System.out.println("队列空的，没有数据～～");
             return;
         }
-        for(int i=0;i < arr.length;i++){
+        for(int i=0;i < front+ getSize();i++){
             System.out.printf("arr[%d]=%d\n",i,arr[i]);
         }
+    }
+
+    public int getSize() {
+        int size = (rear + maxSize - front) % maxSize;
+        return size;
     }
 
     public int headQueue(){
         if(isEmpty()){
             throw new RuntimeException("队列空的，没有数据～");
         }
-        return arr[front+1];
+        return arr[front];
     }
 }
