@@ -1,4 +1,4 @@
-public class Leetcode98 {
+public class Leetcode198 {
     public int rob(int[] nums) {
         if(nums.length==1){
             return nums[0];
