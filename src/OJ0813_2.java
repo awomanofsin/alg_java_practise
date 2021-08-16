@@ -28,7 +28,7 @@ public class OJ0813_2 {
             }
         }
         StringBuffer sb = new StringBuffer();
-        root.print(sb,root);
+        root.print(sb, root, "");
         System.out.println(sb);
     }
 
@@ -57,7 +57,12 @@ class FileTreeNode {
     }
 
     // 判断是不是同一个目录，名称相同就是同一个目录
-    public Boolean equals(FileTreeNode dir) {
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj){
+            return true;
+        }
+        FileTreeNode dir = (FileTreeNode) obj;
         if (dir.curName.equals(this.curName)) {
             if (this.father != null && this.father.equals(dir.father)) {
                 return true;
@@ -81,11 +86,15 @@ class FileTreeNode {
         this.children.add(childDir);
     }
 
-    public String print(StringBuffer txt, FileTreeNode node) {
+    public String print(StringBuffer txt, FileTreeNode node, String blank) {
 
         if (!node.children.isEmpty()) {
             for (FileTreeNode child : node.children) {
-                txt.append(" " + print(txt,child) + "\n");
+                txt.append(blank + node.curName + "\n");
+                blank += " ";
+                if (child != null) {
+                    txt.append(blank + print(txt, child, blank) + "\n");
+                }
             }
         } else {
             return node.curName;
